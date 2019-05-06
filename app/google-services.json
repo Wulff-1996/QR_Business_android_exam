@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "324160997946",
+    "firebase_url": "https://qr-business.firebaseio.com",
+    "project_id": "qr-business",
+    "storage_bucket": "qr-business.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324160997946:android:e40dbcbb23481595",
+        "android_client_info": {
+          "package_name": "com.example.qrbusiness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324160997946-du2qcusfpkfj3dmop8t8hq3v2ahk6cfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK3WAfBj33odjm9AJXWuZrG9YYfsPGXL4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324160997946-du2qcusfpkfj3dmop8t8hq3v2ahk6cfi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
