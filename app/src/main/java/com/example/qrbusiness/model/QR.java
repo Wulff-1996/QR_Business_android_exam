@@ -1,24 +1,37 @@
 package com.example.qrbusiness.model;
 
-import android.media.Image;
-
-public abstract class QR
+public class QR
 {
 
     int id;
-    String name, QrType;
-    Image QRImage;
+    String name, qrType;
+    String imagePath;
 
     public QR()
     {
     }
 
-    public QR(int id, String name, String qrType, Image QRImage)
+    public QR(int id, String name, String qrType, String imagePath)
     {
         this.id = id;
         this.name = name;
-        QrType = qrType;
-        this.QRImage = QRImage;
+        this.qrType = qrType;
+        this.imagePath = imagePath;
+    }
+
+    public QR(String imagePath)
+    {
+        this.imagePath = imagePath;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
     public String getName()
@@ -33,32 +46,22 @@ public abstract class QR
 
     public String getQrType()
     {
-        return QrType;
+        return qrType;
     }
 
     public void setQrType(String qrType)
     {
-        QrType = qrType;
+        this.qrType = qrType;
     }
 
-    public Image getQRImage()
+    public String getImagePath()
     {
-        return QRImage;
+        return imagePath;
     }
 
-    public void setQRImage(Image QRImage)
+    public void setImagePath(String imagePath)
     {
-        this.QRImage = QRImage;
-    }
-
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
+        this.imagePath = imagePath;
     }
 
     @Override
@@ -67,8 +70,8 @@ public abstract class QR
         return "QR{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", QrType='" + QrType + '\'' +
-                ", QRImage=" + QRImage +
+                ", qrType='" + qrType + '\'' +
+                ", imagePath='" + imagePath + '\'' +
                 '}';
     }
 }

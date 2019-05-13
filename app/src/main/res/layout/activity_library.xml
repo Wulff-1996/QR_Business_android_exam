@@ -32,6 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <GridView
+        android:id="@+id/gridView"
         android:layout_width="395dp"
         android:layout_height="588dp"
         android:numColumns="3"
