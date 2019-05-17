@@ -36,7 +36,6 @@ public class LibraryActivity extends AppCompatActivity
     private GridView mGridView;
     private GridViewAdapter mGridViewAdapter;
     private ArrayList<GridItem> mGridData;
-    List<String> QRIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -58,8 +57,7 @@ public class LibraryActivity extends AppCompatActivity
         mGridView.setAdapter(mGridViewAdapter);
         mGridView.setOnScrollListener(this);
         mGridView.setOnItemClickListener(this);
-        this.QRIds = new ArrayList<>();
-        getImages();
+        getQrCodes();
     }
 
 
@@ -94,58 +92,58 @@ public class LibraryActivity extends AppCompatActivity
         this.finish();
     }
 
-    private void getImages()
+    private void getQrCodes()
     {
         // Create a storage reference from our app
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
-        //For testing purposes
-        List<String> imageIds = new ArrayList<>();
-        fetchQrIds();
+        FirebaseFirestore fs = FirebaseFirestore.getInstance();
+        final List<String> QRIds = new ArrayList<>();
 
-        imageIds.add("wifi123");
-        imageIds.add("web123");
-
-        for (String id:imageIds)
-        {
-            storageRef.child("QR_Images/" + id + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri)
-                {
-                    GridItem gridItem = new GridItem();
-                    gridItem.setImage(uri.toString());
-                    mGridData.add(gridItem);
-
-                    mGridViewAdapter.setGridData(mGridData);
-                    //Picasso.with(getApplicationContext()).load(uri.toString()).into();
-                }
-            }).addOnFailureListener(new OnFailureListener()
+        fs.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).collection("QR_IDs")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
             {
                 @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors add logger error
+                public void onComplete(@NonNull Task<QuerySnapshot> task)
+                {
+                    if (task.isSuccessful())
+                    {
+                        for (QueryDocumentSnapshot document : task.getResult())
+                        {
+                            QRIds.add(document.getString("QRID"));
+                        }
+
+                        //Gets all the images from database with relevant assosiation
+                        for (String id:QRIds)
+                        {
+                            storageRef.child("QR_Images/" + id + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
+                            {
+                                @Override
+                                public void onSuccess(Uri uri)
+                                {
+                                    GridItem gridItem = new GridItem();
+                                    gridItem.setImage(uri.toString());
+                                    mGridData.add(gridItem);
+
+                                    mGridViewAdapter.setGridData(mGridData);
+                                    //Picasso.with(getApplicationContext()).load(uri.toString()).into();
+                                }
+                            }).addOnFailureListener(new OnFailureListener()
+                            {
+                                @Override
+                                public void onFailure(@NonNull Exception exception)
+                                {
+                                    // Handle any errors add logger error
+                                }
+                            });
+                        }
+                    }
+                    if (!task.isSuccessful())
+                    {
+                        //Indsæt log error
+                    }
                 }
             });
         }
     }
-    private void fetchQrIds()
-    {
-        FirebaseFirestore fs = FirebaseFirestore.getInstance();
-        fs.collection("users").document("mikkel@mail.com").collection("QR_IDs")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful())
-                        {
-                            for (QueryDocumentSnapshot document : task.getResult())
-                            {
-                                QRIds.add(document.getString("QRID"));
-                            }
-                        }
-                    }
-                });
-    }
-}

@@ -1,8 +1,7 @@
 package com.example.qrbusiness.model;
 
-public class QR
+public abstract class QR
 {
-
     int id;
     String name, qrType;
     String imagePath;
