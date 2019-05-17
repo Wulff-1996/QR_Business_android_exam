@@ -7,9 +7,9 @@ public class QRWiFi extends QR implements Parcelable
 {
     private String wifiName, password, netType;
 
-    public QRWiFi(int id, String name, String qrType, String imagePath, String wifiName, String password, String netType)
+    public QRWiFi(String id, String name, String wifiName, String password, String netType)
     {
-        super(id, name, qrType, imagePath);
+        super(id, name, "Wifi");
         this.wifiName = wifiName;
         this.password = password;
         this.netType = netType;

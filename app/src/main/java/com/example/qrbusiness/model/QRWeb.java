@@ -7,9 +7,9 @@ public class QRWeb extends  QR implements Parcelable
 {
     private String url;
 
-    public QRWeb(int id, String name, String qrType, String imagePath, String url)
+    public QRWeb(String id, String name, String url)
     {
-        super(id, name, qrType, imagePath);
+        super(id, name, "Web");
         this.url = url;
     }
 

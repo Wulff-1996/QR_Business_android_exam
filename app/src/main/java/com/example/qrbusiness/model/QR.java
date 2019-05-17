@@ -2,33 +2,25 @@ package com.example.qrbusiness.model;
 
 public abstract class QR
 {
-    int id;
-    String name, qrType;
-    String imagePath;
+    String id, name, qrType;
 
     public QR()
     {
     }
 
-    public QR(int id, String name, String qrType, String imagePath)
+    public QR(String id, String name, String qrType)
     {
         this.id = id;
         this.name = name;
         this.qrType = qrType;
-        this.imagePath = imagePath;
     }
 
-    public QR(String imagePath)
-    {
-        this.imagePath = imagePath;
-    }
-
-    public int getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(String id)
     {
         this.id = id;
     }
@@ -53,15 +45,6 @@ public abstract class QR
         this.qrType = qrType;
     }
 
-    public String getImagePath()
-    {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath)
-    {
-        this.imagePath = imagePath;
-    }
 
     @Override
     public String toString()
@@ -70,7 +53,6 @@ public abstract class QR
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", qrType='" + qrType + '\'' +
-                ", imagePath='" + imagePath + '\'' +
                 '}';
     }
 }

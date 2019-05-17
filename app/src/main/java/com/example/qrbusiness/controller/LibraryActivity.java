@@ -13,6 +13,10 @@ import android.widget.GridView;
 import com.example.qrbusiness.GridViewAdapter;
 import com.example.qrbusiness.R;
 import com.example.qrbusiness.model.GridItem;
+import com.example.qrbusiness.model.QR;
+import com.example.qrbusiness.model.QRVcard;
+import com.example.qrbusiness.model.QRWeb;
+import com.example.qrbusiness.model.QRWiFi;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity
@@ -95,55 +100,117 @@ public class LibraryActivity extends AppCompatActivity
     private void getQrCodes()
     {
         // Create a storage reference from our app
-        final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-
         FirebaseFirestore fs = FirebaseFirestore.getInstance();
         final List<String> QRIds = new ArrayList<>();
+        final HashSet<QR> QRList = new HashSet<>();
 
+        fetchQRImages(fs, QRIds);
+        fetchQRObjects(fs, QRIds, QRList);
+    }
+
+    private void fetchQRImages(FirebaseFirestore fs, final List<String> QRIds)
+    {
+        final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         fs.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).collection("QR_IDs")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-            {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task)
                 {
-                    if (task.isSuccessful())
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task)
                     {
-                        for (QueryDocumentSnapshot document : task.getResult())
+                        if (task.isSuccessful())
                         {
-                            QRIds.add(document.getString("QRID"));
+                            for (QueryDocumentSnapshot document : task.getResult())
+                            {
+                                QRIds.add(document.getString("QRID"));
+                            }
+
+                            //Gets all the images from database with relevant assosiation
+                            for (String id:QRIds)
+                            {
+                                try
+                                {
+                                    storageRef.child("QR_Images/" + id + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
+                                    {
+                                        @Override
+                                        public void onSuccess(Uri uri)
+                                        {
+                                            GridItem gridItem = new GridItem();
+                                            gridItem.setImage(uri.toString());
+                                            mGridData.add(gridItem);
+
+                                            mGridViewAdapter.setGridData(mGridData);
+                                            //Picasso.with(getApplicationContext()).load(uri.toString()).into();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener()
+                                    {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception)
+                                        {
+                                            // Handle any errors add logger error
+                                        }
+                                    });
+                                }
+                                //Bad practice, but android studio does not recognize correct error: StorageException
+                                catch (Exception e)
+                                {
+                                    //Tilføj til log
+                                }
+                            }
                         }
-
-                        //Gets all the images from database with relevant assosiation
-                        for (String id:QRIds)
+                        if (!task.isSuccessful())
                         {
-                            storageRef.child("QR_Images/" + id + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
-                            {
-                                @Override
-                                public void onSuccess(Uri uri)
-                                {
-                                    GridItem gridItem = new GridItem();
-                                    gridItem.setImage(uri.toString());
-                                    mGridData.add(gridItem);
-
-                                    mGridViewAdapter.setGridData(mGridData);
-                                    //Picasso.with(getApplicationContext()).load(uri.toString()).into();
-                                }
-                            }).addOnFailureListener(new OnFailureListener()
-                            {
-                                @Override
-                                public void onFailure(@NonNull Exception exception)
-                                {
-                                    // Handle any errors add logger error
-                                }
-                            });
+                            //Indsæt log error
                         }
                     }
-                    if (!task.isSuccessful())
+                });
+    }
+
+    private void fetchQRObjects(FirebaseFirestore fs, List<String> qrIds, final HashSet<QR> QRList)
+    {
+        fs.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).collection("QR_IDs")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+        {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task)
+            {
+                if (task.isSuccessful())
+                {
+                    for (QueryDocumentSnapshot document : task.getResult())
                     {
-                        //Indsæt log error
+                        try
+                        {
+                            switch (document.getString("Type"))
+                            {
+                                case "web":
+                                    QRList.add(new QRWeb(document.getString("QRID"),
+                                            document.getString("Name"), document.getString("URL")));
+                                    break;
+                                case "wifi":
+                                    QRList.add(new QRWiFi(document.getString("QRID"),
+                                            document.getString("Name"), document.getString("WiFi Name"),
+                                            document.getString("Password"), document.getString("Network Type")));
+                                    break;
+                                case "vcard":
+                                    QRList.add(new QRVcard(document.getString("QRID"),
+                                            document.getString("Name"), document.getString("First Name"),
+                                            document.getString("Last Name"), document.getString("Phone Number"), document.getString("Email")));
+                                    break;
+                            }
+                        }
+                        catch (NullPointerException NPE)
+                        {
+                        }
+
                     }
                 }
-            });
-        }
+                if (!task.isSuccessful()) {
+                    //Indsæt log error
+                }
+            }
+        });
     }
+}
+
+

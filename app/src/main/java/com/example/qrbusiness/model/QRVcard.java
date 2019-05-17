@@ -7,9 +7,9 @@ public class QRVcard extends QR implements Parcelable
 {
     private String firstName, lastName, phoneNum, email;
 
-    public QRVcard(int id, String name, String qrType, String imagePath, String firstName, String lastName, String phoneNum, String email)
+    public QRVcard(String id, String name, String firstName, String lastName, String phoneNum, String email)
     {
-        super(id, name, qrType, imagePath);
+        super(id, name, "Vcard");
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNum = phoneNum;
