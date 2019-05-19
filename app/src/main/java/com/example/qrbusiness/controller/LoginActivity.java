@@ -17,6 +17,10 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -104,7 +108,7 @@ public class LoginActivity extends AppCompatActivity
 
     public void signUp(View v)
     {
-        String email = editTextEmail.getText().toString();
+        final String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
         if (email.length() == 0 || password.length() == 0)
@@ -121,6 +125,16 @@ public class LoginActivity extends AppCompatActivity
                         {
                             if (task.isSuccessful())
                             {
+                                //Update DB with user
+                                FirebaseFirestore fs = FirebaseFirestore.getInstance();
+                                Map<String, String> data = new HashMap<>();
+                                data.put("Name", "TestQR");
+                                fs.collection("users")
+                                        .document(email)
+                                        .collection("QR_IDs")
+                                        .document("Test").set(data);
+
+
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();

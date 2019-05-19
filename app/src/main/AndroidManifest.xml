@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".controller.CreateQRActivity" />
-        <activity android:name=".controller.DetailsActivity" />
+        <activity android:name=".controller.Details.DetailsActivity" />
         <activity android:name=".controller.LibraryActivity" />
     </application>
 
