@@ -2,9 +2,9 @@
 <android.support.v7.widget.ContentFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/detailsContainer"
+    android:id="@+id/createContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.Details.DetailsActivity">
+    tools:context=".controller.Create.CreateActivity">
 
 </android.support.v7.widget.ContentFrameLayout>
