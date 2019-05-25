@@ -52,14 +52,12 @@ public class WifiFragment extends Fragment
         if (wiFi != null)
         {
             this.tvName = view.findViewById(R.id.nameResult);
-            this.tvType = view.findViewById(R.id.typeResult);
             this.tvWifiName = view.findViewById(R.id.wifiNameResult);
             this.tvPassword = view.findViewById(R.id.passwordResult);
             this.tvNetType = view.findViewById(R.id.netTypeResult);
             this.poster = view.findViewById(R.id.poster);
 
             tvName.setText(wiFi.getName());
-            tvType.setText(wiFi.getQrType());
             tvWifiName.setText(wiFi.getWifiName());
             tvPassword.setText(wiFi.getPassword());
             tvNetType.setText(wiFi.getNetType());

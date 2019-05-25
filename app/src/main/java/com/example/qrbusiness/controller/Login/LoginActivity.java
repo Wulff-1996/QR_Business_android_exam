@@ -1,4 +1,4 @@
-package com.example.qrbusiness.controller;
+package com.example.qrbusiness.controller.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.qrbusiness.R;
+import com.example.qrbusiness.controller.Navigation.NavigationActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -63,7 +64,11 @@ public class LoginActivity extends AppCompatActivity
     {
         if (user != null)
         {
-            Intent intent = new Intent(this, LibraryActivity.class);
+            String email = user.getEmail();
+            Bundle b = new Bundle();
+            b.putString("EMAIL", email);
+            Intent intent = new Intent(this, NavigationActivity.class);
+            intent.putExtra("BUNDLE", b);
             startActivity(intent);
         }
 

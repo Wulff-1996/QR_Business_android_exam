@@ -50,12 +50,10 @@ public class WebFragment extends Fragment
         if (web != null)
         {
             this.tvName = view.findViewById(R.id.nameResult);
-            this.tvType = view.findViewById(R.id.typeResult);
             this.tvUrl = view.findViewById(R.id.url);
             this.poster = view.findViewById(R.id.poster);
 
             tvName.setText(web.getName());
-            tvType.setText(web.getQrType());
             tvUrl.setText(web.getUrl());
 
             Picasso.with(getContext()).load(web.getImagePath()).into(poster);

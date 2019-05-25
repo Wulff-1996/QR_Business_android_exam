@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.qrbusiness.R;
 import com.squareup.picasso.Picasso;
@@ -55,6 +56,8 @@ public class GridViewAdapter extends ArrayAdapter<GridItem>
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
             holder.imageView = row.findViewById(R.id.QRImage);
+            holder.name = row.findViewById(R.id.name);
+            holder.icon = row.findViewById(R.id.qr_icon);
             row.setTag(holder);
         } else {
             holder = (ViewHolder) row.getTag();
@@ -65,11 +68,21 @@ public class GridViewAdapter extends ArrayAdapter<GridItem>
         {
             Picasso.with(mContext).load(item.getImage()).into(holder.imageView);
         }
+        if (item.getName() != null)
+        {
+            holder.name.setText(item.getName());
+        }
+        if (item.getIcon() != null)
+        {
+           holder.icon.setImageDrawable(item.getIcon());
+        }
 
         return row;
     }
 
     static class ViewHolder {
         ImageView imageView;
+        ImageView icon;
+        TextView name;
     }
 }

@@ -53,14 +53,12 @@ public class VcardFragment extends Fragment
         if (vcard != null)
         {
             this.tvName = view.findViewById(R.id.nameResult);
-            this.tvType = view.findViewById(R.id.typeResult);
             this.tvFulldname = view.findViewById(R.id.fullNameResult);
             this.tvEmail = view.findViewById(R.id.emailResult);
             this.tvPhone = view.findViewById(R.id.phoneResult);
             this.poster = view.findViewById(R.id.poster);
 
             tvName.setText(vcard.getName());
-            tvType.setText(vcard.getQrType());
             tvFulldname.setText(vcard.getFirstName() + "" + vcard.getLastName());
             tvEmail.setText(vcard.getEmail());
             tvPhone.setText(vcard.getPhoneNum());

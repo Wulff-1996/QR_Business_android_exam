@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.qrbusiness">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
-
 
     <application
         android:allowBackup="true"
@@ -13,16 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.LoginActivity">
+        <activity android:name=".controller.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.CreateQRActivity" />
         <activity android:name=".controller.Details.DetailsActivity" />
-        <activity android:name=".controller.LibraryActivity" />
+        <activity android:name=".controller.Navigation.NavigationActivity" />
+        <activity android:name=".controller.Create.CreateActivity" />
     </application>
 
 </manifest>
