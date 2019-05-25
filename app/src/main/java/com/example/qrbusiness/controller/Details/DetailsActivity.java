@@ -47,7 +47,8 @@ public class DetailsActivity extends AppCompatActivity
                 Fragment fragWifi = new WifiFragment();
 
                 fragWifi.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction()
+                getSupportFragmentManager()
+                        .beginTransaction()
                         .add(R.id.detailsContainer, fragWifi)
                         .commit();
                 break;
@@ -55,7 +56,8 @@ public class DetailsActivity extends AppCompatActivity
             case "web":
                 Fragment fragWeb = new WebFragment();
                 fragWeb.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction()
+                getSupportFragmentManager()
+                        .beginTransaction()
                         .add(R.id.detailsContainer, fragWeb)
                         .commit();
                 break;
