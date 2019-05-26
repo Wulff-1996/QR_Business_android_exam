@@ -6,31 +6,23 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.qrbusiness.R;
 import com.example.qrbusiness.controller.Navigation.NavigationActivity;
+import com.example.qrbusiness.model.Firestore;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity
 {
     private static final String TAG = "LogInActivity";
 
-    private FirebaseAuth mAuth;
-
-    private Button btnSignIn, btnSignUp;
-    private EditText editTextEmail, editTextPassword;
+    private EditText email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -39,24 +31,20 @@ public class LoginActivity extends AppCompatActivity
         setContentView(R.layout.activity_login);
 
         FirebaseApp.initializeApp(this);
-        mAuth = FirebaseAuth.getInstance();
-
         init();
     }
 
     private void init()
     {
-        this.editTextEmail = findViewById(R.id.EmailEditText);
-        this.editTextPassword = findViewById(R.id.PasswordEditText);
-        this.btnSignIn = findViewById(R.id.SigninBtn);
-        this.btnSignUp = findViewById(R.id.SignupBtn);
+        this.email = findViewById(R.id.login_email);
+        this.password = findViewById(R.id.login_password);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = Firestore.getCurrentUser();
         updateUI(currentUser);
     }
 
@@ -76,8 +64,8 @@ public class LoginActivity extends AppCompatActivity
 
     public void signIn(View v)
     {
-        String email = editTextEmail.getText().toString();
-        String password = editTextPassword.getText().toString();
+        String email = this.email.getText().toString();
+        String password = this.password.getText().toString();
 
         if (email.length() == 0 || password.length() == 0)
         {
@@ -85,7 +73,7 @@ public class LoginActivity extends AppCompatActivity
         }
         else
         {
-            mAuth.signInWithEmailAndPassword(editTextEmail.getText().toString(), editTextPassword.getText().toString())
+            Firestore.getFirebaseAuth().signInWithEmailAndPassword(this.email.getText().toString(), this.password.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
                     {
                         @Override
@@ -95,7 +83,7 @@ public class LoginActivity extends AppCompatActivity
                             {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                FirebaseUser user = Firestore.getCurrentUser();
                                 updateUI(user);
                             }
                             else
@@ -113,8 +101,8 @@ public class LoginActivity extends AppCompatActivity
 
     public void signUp(View v)
     {
-        final String email = editTextEmail.getText().toString();
-        String password = editTextPassword.getText().toString();
+        final String email = this.email.getText().toString();
+        String password = this.password.getText().toString();
 
         if (email.length() == 0 || password.length() == 0)
         {
@@ -122,7 +110,7 @@ public class LoginActivity extends AppCompatActivity
         }
         else
         {
-            mAuth.createUserWithEmailAndPassword(editTextEmail.getText().toString(), editTextPassword.getText().toString())
+            Firestore.getFirebaseAuth().createUserWithEmailAndPassword(this.email.getText().toString(), this.password.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
                     {
                         @Override
@@ -130,19 +118,9 @@ public class LoginActivity extends AppCompatActivity
                         {
                             if (task.isSuccessful())
                             {
-                                //Update DB with user
-                                FirebaseFirestore fs = FirebaseFirestore.getInstance();
-                                Map<String, String> data = new HashMap<>();
-                                data.put("Name", "TestQR");
-                                fs.collection("users")
-                                        .document(email)
-                                        .collection("QR_IDs")
-                                        .document("Test").set(data);
-
-
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                FirebaseUser user = Firestore.getCurrentUser();
                                 updateUI(user);
                             } else {
                                 // If sign in fails, display a message to the user.

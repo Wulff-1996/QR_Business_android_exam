@@ -51,15 +51,18 @@ public class GridViewAdapter extends ArrayAdapter<GridItem>
         View row = convertView;
         ViewHolder holder;
 
-        if (row == null) {
+        if (row == null)
+        {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
-            holder.imageView = row.findViewById(R.id.QRImage);
-            holder.name = row.findViewById(R.id.name);
-            holder.icon = row.findViewById(R.id.qr_icon);
+            holder.imageView = row.findViewById(R.id.gird_item_qr_image);
+            holder.name = row.findViewById(R.id.gird_item_name);
+            holder.icon = row.findViewById(R.id.gird_item_qr_icon);
             row.setTag(holder);
-        } else {
+        }
+        else
+        {
             holder = (ViewHolder) row.getTag();
         }
 

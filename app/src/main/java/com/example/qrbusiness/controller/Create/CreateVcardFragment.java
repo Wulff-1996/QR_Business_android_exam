@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qrbusiness.R;
@@ -33,16 +31,12 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class CreateVcardFragment extends Fragment implements View.OnClickListener, TextWatcher
 {
 
     private QRVcard vcard;
-    private Image image;
-    private TextView titleText;
     private EditText nameResult, firstNameResult, lastNameResult, phoneNumberResult, emailResult;
     private Button createBtn;
 
@@ -57,7 +51,7 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.create_vcard_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_vcard, container, false);
 
         init(view);
 
@@ -66,13 +60,12 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
 
     private void init(View view)
     {
-        this.titleText = view.findViewById(R.id.TextviewTitle);
-        this.nameResult = view.findViewById(R.id.urlQRName);
-        this.firstNameResult = view.findViewById(R.id.EditTextFirstName);
-        this.lastNameResult = view.findViewById(R.id.EditTextLastName);
-        this.phoneNumberResult = view.findViewById(R.id.EditTextNumber);
-        this.emailResult = view.findViewById(R.id.EditTextEmail);
-        this.createBtn = view.findViewById(R.id.CreateBtn);
+        this.nameResult = view.findViewById(R.id.create_vcard_qr_name);
+        this.firstNameResult = view.findViewById(R.id.create_vcard_firstname);
+        this.lastNameResult = view.findViewById(R.id.create_vcard_lastname);
+        this.phoneNumberResult = view.findViewById(R.id.create_vcard_phone);
+        this.emailResult = view.findViewById(R.id.create_vcard_email);
+        this.createBtn = view.findViewById(R.id.create_vcard_create_btn);
         this.createBtn.setOnClickListener(this);
         this.createBtn.setEnabled(false);
 
@@ -86,11 +79,10 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v)
     {
-        if (v.getId() == R.id.CreateBtn)
+        if (v.getId() == R.id.create_vcard_create_btn)
         {
             this.vcard = new QRVcard();
             this.vcard.setName(nameResult.getText().toString());
-            this.vcard.setQrType("vcard");
             this.vcard.setFirstName(firstNameResult.getText().toString());
             this.vcard.setLastName(lastNameResult.getText().toString());
             this.vcard.setPhoneNum(phoneNumberResult.getText().toString());
@@ -103,22 +95,14 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
 
     private void uploadQRModel(Uri uri)
     {
-        Map<String, Object> vcard = new HashMap<>();
-        vcard.put("Name", this.vcard.getName());
-        vcard.put("Type", this.vcard.getQrType());
-        vcard.put("First Name", this.vcard.getFirstName());
-        vcard.put("Last Name", this.vcard.getLastName());
-        vcard.put("Email", this.vcard.getEmail());
-        vcard.put("Phone Number", this.vcard.getPhoneNum());
-        vcard.put("Image Location", uri.toString());
-
         this.vcard.setImagePath(uri.toString());
-
-        final QRVcard v = this.vcard;
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         final DocumentReference documentReference = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).collection("QR_IDs").document();
+
+        this.vcard.setId(documentReference.getId());
+        final QRVcard vcard = this.vcard;
 
         documentReference
                 .set(vcard)
@@ -129,11 +113,8 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
                     {
                         Toast.makeText(getActivity(), "Vcard added to Library", Toast.LENGTH_SHORT).show();
 
-                        v.setId(documentReference.toString());
-
-
                         Intent i = new Intent(getActivity(), DetailsActivity.class);
-                        i.putExtra("BUNDLE", v.toBundle());
+                        i.putExtra("BUNDLE", vcard.toBundle());
                         startActivity(i);
                         getActivity().finish();
 
@@ -172,6 +153,7 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
                         progressDialog.dismiss();
                         Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
 
+                        //  get download path to the image
                         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
                         {
                             @Override
@@ -181,8 +163,6 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
                                 uploadQRModel(uri);
                             }
                         });
-
-
                     }
                 })
                 .addOnFailureListener(new OnFailureListener()
@@ -191,7 +171,7 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
                     public void onFailure(@NonNull Exception e)
                     {
                         progressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>()

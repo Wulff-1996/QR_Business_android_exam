@@ -7,7 +7,7 @@
     tools:context=".controller.Create.CreateVcardFragment">
 
     <TextView
-        android:id="@+id/TextviewTitle"
+        android:id="@+id/create_vcard_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/CreateBtn"
+        android:id="@+id/create_vcard_create_btn"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
@@ -29,10 +29,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTextEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/create_vcard_email" />
 
     <EditText
-        android:id="@+id/urlQRName"
+        android:id="@+id/create_vcard_qr_name"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
@@ -41,10 +41,10 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextviewTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/create_vcard_title" />
 
     <EditText
-        android:id="@+id/EditTextFirstName"
+        android:id="@+id/create_vcard_firstname"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -53,22 +53,22 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/urlQRName" />
+        app:layout_constraintTop_toBottomOf="@+id/create_vcard_qr_name" />
 
     <EditText
-        android:id="@+id/EditTextLastName"
+        android:id="@+id/create_vcard_lastname"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="49dp"
         android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="Enter last name of contact"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTextFirstName" />
+        app:layout_constraintTop_toBottomOf="@+id/create_vcard_firstname" />
 
     <EditText
-        android:id="@+id/EditTextNumber"
+        android:id="@+id/create_vcard_phone"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -78,10 +78,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTextLastName" />
+        app:layout_constraintTop_toBottomOf="@+id/create_vcard_lastname" />
 
     <EditText
-        android:id="@+id/EditTextEmail"
+        android:id="@+id/create_vcard_email"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -90,6 +90,6 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTextNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/create_vcard_phone" />
 
 </android.support.constraint.ConstraintLayout>

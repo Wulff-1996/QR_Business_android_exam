@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/QRImage"
+        android:id="@+id/gird_item_qr_image"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginTop="-10dp"
@@ -13,11 +13,11 @@
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qr_icon"
+        app:layout_constraintTop_toBottomOf="@+id/gird_item_qr_icon"
         app:srcCompat="@drawable/ic_dashboard_black_24dp" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/gird_item_name"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:background="@color/colorBlack"
@@ -28,10 +28,10 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/QRImage" />
+        app:layout_constraintTop_toBottomOf="@+id/gird_item_qr_image" />
 
     <ImageView
-        android:id="@+id/qr_icon"
+        android:id="@+id/gird_item_qr_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"

@@ -21,7 +21,6 @@ public class WebFragment extends Fragment
     private QRWeb web;
 
     private TextView tvName;
-    private TextView tvType;
     private TextView tvUrl;
     private ImageView poster;
 
@@ -45,13 +44,13 @@ public class WebFragment extends Fragment
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.details_web, container, false);
+        View view = inflater.inflate(R.layout.fragment_details_web, container, false);
 
         if (web != null)
         {
-            this.tvName = view.findViewById(R.id.nameResult);
-            this.tvUrl = view.findViewById(R.id.url);
-            this.poster = view.findViewById(R.id.poster);
+            this.tvName = view.findViewById(R.id.details_web_qr_name);
+            this.tvUrl = view.findViewById(R.id.details_web_url_result);
+            this.poster = view.findViewById(R.id.details_web_poster);
 
             tvName.setText(web.getName());
             tvUrl.setText(web.getUrl());

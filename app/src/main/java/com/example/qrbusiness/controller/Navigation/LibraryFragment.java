@@ -14,6 +14,7 @@ import android.widget.GridView;
 
 import com.example.qrbusiness.R;
 import com.example.qrbusiness.controller.Details.DetailsActivity;
+import com.example.qrbusiness.model.Firestore;
 import com.example.qrbusiness.model.GridItem;
 import com.example.qrbusiness.model.GridViewAdapter;
 import com.example.qrbusiness.model.ORModels.QR;
@@ -22,26 +23,20 @@ import com.example.qrbusiness.model.ORModels.QRWeb;
 import com.example.qrbusiness.model.ORModels.QRWiFi;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LibraryFragment extends Fragment implements
         AbsListView.OnScrollListener,
         AdapterView.OnItemClickListener
 {
     private List<QR> QRList;
-
     private GridView mGridView;
     private GridViewAdapter mGridViewAdapter;
     private ArrayList<GridItem> mGridData;
-    private Map<String, String> QRids;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
@@ -56,32 +51,22 @@ public class LibraryFragment extends Fragment implements
 
         View view = inflater.inflate(R.layout.fragment_library, container, false);
 
-        this.mGridView = view.findViewById(R.id.gridView);
+        this.mGridView = view.findViewById(R.id.library_gridView);
         this.mGridData = new ArrayList<>();
         this.mGridViewAdapter = new GridViewAdapter(getActivity(), R.layout.grid_item, this.mGridData);
         this.QRList = new ArrayList<>();
-        this.QRids = new HashMap<>();
 
         mGridView.setAdapter(mGridViewAdapter);
         mGridView.setOnScrollListener(this);
         mGridView.setOnItemClickListener(this);
-        getQrCodes();
+        fetchQRObjects();
 
         return view;
     }
 
-    private void getQrCodes()
+    private void fetchQRObjects()
     {
-        // Create a storage reference from our app
-        FirebaseFirestore fs = FirebaseFirestore.getInstance();
-        final HashMap<String, String> QRIds = new HashMap<>();
-
-        fetchQRObjects(fs);
-    }
-
-    private void fetchQRObjects(FirebaseFirestore fs)
-    {
-        fs.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).collection("QR_IDs")
+        Firestore.getCurrentUsersQrCollection()
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
                 {
@@ -94,25 +79,16 @@ public class LibraryFragment extends Fragment implements
                             {
                                 try
                                 {
-                                    switch (document.getString("Type"))
+                                    switch (document.getString("qrType"))
                                     {
                                         case "web":
-                                            String id = document.getString("QRID");
-                                            String name = document.getString("Name");
-                                            String imageLocation = document.getString("Image Location");
-
-                                            //  map to object
-                                            QRWeb web = new QRWeb();
-                                            web.setId(id);
-                                            web.setImagePath(imageLocation);
-                                            web.setName(name);
-                                            web.setUrl(document.getString("URL"));
+                                            QRWeb web = document.toObject(QRWeb.class);
                                             QRList.add(web);
 
                                             //  map to griditem
                                             GridItem gridItem = new GridItem();
-                                            gridItem.setImage(imageLocation);
-                                            gridItem.setName(name);
+                                            gridItem.setImage(web.getImagePath());
+                                            gridItem.setName(web.getName());
                                             gridItem.setIcon(getResources().getDrawable(R.drawable.ic_url));
                                             mGridData.add(gridItem);
 
@@ -120,49 +96,26 @@ public class LibraryFragment extends Fragment implements
                                             break;
 
                                         case "wifi":
-                                            id = document.getString("QRID");
-                                            name = document.getString("Name");
-                                            imageLocation = document.getString("Image Location");
-
-                                            //  map to object
-                                            QRWiFi wifi = new QRWiFi();
-                                            wifi.setId(document.getString("QRID"));
-                                            wifi.setImagePath(imageLocation);
-                                            wifi.setName(document.getString("Name"));
-                                            wifi.setWifiName(document.getString("WiFi Name"));
-                                            wifi.setPassword(document.getString("Password"));
-                                            wifi.setNetType(document.getString("Network Type"));
+                                            QRWiFi wifi = document.toObject(QRWiFi.class);
                                             QRList.add(wifi);
 
                                             //  map to griditem
                                             gridItem = new GridItem();
-                                            gridItem.setImage(imageLocation);
-                                            gridItem.setName(name);
+                                            gridItem.setImage(wifi.getImagePath());
+                                            gridItem.setName(wifi.getName());
                                             gridItem.setIcon(getResources().getDrawable(R.drawable.ic_wifi));
                                             mGridData.add(gridItem);
                                             mGridViewAdapter.setGridData(mGridData);
                                             break;
 
                                         case "vcard":
-                                            id = document.getString("QRID");
-                                            name = document.getString("Name");
-                                            imageLocation = document.getString("Image Location");
-
-                                            //  map to object
-                                            QRVcard vcard = new QRVcard();
-                                            vcard.setId(document.getString("QRID"));
-                                            vcard.setImagePath(imageLocation);
-                                            vcard.setName(document.getString("Name"));
-                                            vcard.setFirstName(document.getString("First Name"));
-                                            vcard.setLastName(document.getString("Last Name"));
-                                            vcard.setPhoneNum(document.getString("Phone Number"));
-                                            vcard.setEmail(document.getString("Email"));
+                                            QRVcard vcard = document.toObject(QRVcard.class);
                                             QRList.add(vcard);
 
                                             //  map to griditem
                                             gridItem = new GridItem();
-                                            gridItem.setImage(imageLocation);
-                                            gridItem.setName(name);
+                                            gridItem.setImage(vcard.getImagePath());
+                                            gridItem.setName(vcard.getName());
                                             gridItem.setIcon(getResources().getDrawable(R.drawable.ic_vcard));
                                             mGridData.add(gridItem);
                                             mGridViewAdapter.setGridData(mGridData);

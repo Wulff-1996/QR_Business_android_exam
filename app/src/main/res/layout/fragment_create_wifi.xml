@@ -7,7 +7,7 @@
     tools:context=".controller.Create.CreateWifiFragment">
 
     <EditText
-        android:id="@+id/EditTextName"
+        android:id="@+id/create_wifi_qr_name"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
@@ -16,10 +16,10 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextviewTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/create_wifi_title" />
 
     <EditText
-        android:id="@+id/EditTextWifiName"
+        android:id="@+id/create_wifi_wifi_name"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -28,10 +28,10 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTextName" />
+        app:layout_constraintTop_toBottomOf="@+id/create_wifi_qr_name" />
 
     <EditText
-        android:id="@+id/EditTextPassword"
+        android:id="@+id/create_wifi_password"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -40,19 +40,19 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTextWifiName" />
+        app:layout_constraintTop_toBottomOf="@+id/create_wifi_wifi_name" />
 
     <Spinner
-        android:id="@+id/authTypeDropdown"
+        android:id="@+id/create_wifi_nettypes"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:spinnerMode="dropdown"
-        app:layout_constraintStart_toStartOf="@+id/EditTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/EditTextPassword" />
+        app:layout_constraintStart_toStartOf="@+id/create_wifi_password"
+        app:layout_constraintTop_toBottomOf="@+id/create_wifi_password" />
 
     <Button
-        android:id="@+id/CreateBtn"
+        android:id="@+id/create_wifi_create_btn"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
@@ -60,10 +60,10 @@
         android:text="Create QR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authTypeDropdown" />
+        app:layout_constraintTop_toBottomOf="@+id/create_wifi_nettypes" />
 
     <TextView
-        android:id="@+id/TextviewTitle"
+        android:id="@+id/create_wifi_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"

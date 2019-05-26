@@ -21,7 +21,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/poster"
+            android:id="@+id/details_wifi_poster"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="100dp"
@@ -42,21 +42,21 @@
         android:orientation="vertical"
         android:clickable="true"
         android:focusable="false"
-        android:id="@+id/dragView">
+        android:id="@+id/details_wifi_dragView">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/nameResult"
+                android:id="@+id/details_wifi_qr_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:text=""
+                android:text="Vcard for business"
                 android:textColor="@android:color/white"
                 android:textSize="36sp"
                 android:textStyle="bold"
@@ -65,36 +65,37 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/icon"
+                android:id="@+id/details_wifi_icon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:scaleType="fitCenter"
                 android:tint="@color/colorAccent"
-                app:layout_constraintBottom_toBottomOf="@+id/nameResult"
+                app:layout_constraintBottom_toBottomOf="@+id/details_wifi_qr_name"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameResult"
-                sothree:srcCompat="@drawable/ic_vcard" />
+                app:layout_constraintTop_toBottomOf="@+id/details_wifi_qr_name"
+                sothree:srcCompat="@drawable/ic_wifi"
+                android:layout_marginStart="20dp" />
 
             <TextView
-                android:id="@+id/fullName"
+                android:id="@+id/details_wifi_wifi_name"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:text="fullname:"
+                android:text="wifi name:"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/icon" />
+                app:layout_constraintTop_toBottomOf="@+id/details_wifi_icon" />
 
             <TextView
-                android:id="@+id/fullNameResult"
+                android:id="@+id/details_wifi_wifi_name_result"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="20dp"
@@ -108,10 +109,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fullName" />
+                app:layout_constraintTop_toBottomOf="@+id/details_wifi_wifi_name" />
 
             <TextView
-                android:id="@+id/email"
+                android:id="@+id/details_wifi_password"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="20dp"
@@ -119,51 +120,16 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:text="Email:"
+                android:text="password:"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fullNameResult" />
+                app:layout_constraintTop_toBottomOf="@+id/details_wifi_wifi_name_result" />
 
             <TextView
-                android:id="@+id/emailResult"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
-                android:text=""
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email" />
-
-            <TextView
-                android:id="@+id/phone"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
-                android:text="Phone:"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailResult" />
-
-            <TextView
-                android:id="@+id/phoneResult"
+                android:id="@+id/details_wifi_password_result"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="20dp"
@@ -178,7 +144,42 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phone" />
+                app:layout_constraintTop_toBottomOf="@+id/details_wifi_password" />
+
+            <TextView
+                android:id="@+id/details_wifi_nettype"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Net type:"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/details_wifi_password_result" />
+
+            <TextView
+                android:id="@+id/details_wifi_nettype_result"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/details_wifi_nettype" />
 
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>

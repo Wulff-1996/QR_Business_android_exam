@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qrbusiness.R;
@@ -32,14 +31,11 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class CreateWebFragment extends Fragment implements View.OnClickListener, TextWatcher
 {
     private QRWeb web;
-    private TextView titletext;
     private EditText nameResult, urlResult;
     private Button createBtn;
 
@@ -53,7 +49,7 @@ public class CreateWebFragment extends Fragment implements View.OnClickListener,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.create_web_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_web, container, false);
 
         init(view);
 
@@ -62,10 +58,9 @@ public class CreateWebFragment extends Fragment implements View.OnClickListener,
 
     private void init(View view)
     {
-        this.titletext = view.findViewById(R.id.TextviewTitle);
-        this.nameResult = view.findViewById(R.id.urlQRName);
-        this.urlResult = view.findViewById(R.id.urlResult);
-        this.createBtn = view.findViewById(R.id.urlCreateBtn);
+        this.nameResult = view.findViewById(R.id.create_web_qr_name);
+        this.urlResult = view.findViewById(R.id.create_web_url);
+        this.createBtn = view.findViewById(R.id.create_web_create_btn);
         this.createBtn.setOnClickListener(this);
         this.createBtn.setEnabled(false);
 
@@ -76,11 +71,10 @@ public class CreateWebFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onClick(View v)
     {
-        if (v.getId() == R.id.urlCreateBtn)
+        if (v.getId() == R.id.create_web_create_btn)
         {
             this.web = new QRWeb();
             this.web.setName(nameResult.getText().toString());
-            this.web.setQrType("web");
             this.web.setUrl(urlResult.getText().toString());
 
             uploadImage();
@@ -90,20 +84,14 @@ public class CreateWebFragment extends Fragment implements View.OnClickListener,
 
     private void uploadQRModel(Uri uri)
     {
-        Map<String, Object> web = new HashMap<>();
-        web.put("Name", this.web.getName());
-        web.put("Type", this.web.getQrType());
-        web.put("URL", this.web.getUrl());
-        web.put("Image Location", uri.toString());
-
         this.web.setImagePath(uri.toString());
-
-        final QRWeb v = this.web;
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         final DocumentReference documentReference = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).collection("QR_IDs").document();
 
+        this.web.setId(documentReference.getId());
+        final QRWeb web = this.web;
         documentReference
                 .set(web)
                 .addOnSuccessListener(new OnSuccessListener<Void>()
@@ -113,11 +101,8 @@ public class CreateWebFragment extends Fragment implements View.OnClickListener,
                     {
                         Toast.makeText(getActivity(), "Web added to Library", Toast.LENGTH_SHORT).show();
 
-                        v.setId(documentReference.toString());
-
-
                         Intent i = new Intent(getActivity(), DetailsActivity.class);
-                        i.putExtra("BUNDLE", v.toBundle());
+                        i.putExtra("BUNDLE", web.toBundle());
                         startActivity(i);
                         getActivity().finish();
 

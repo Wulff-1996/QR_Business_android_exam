@@ -20,11 +20,10 @@ public class VcardFragment extends Fragment
     private Callbacks detailsActivity;
     private QRVcard vcard;
 
-    private TextView tvName;
-    private TextView tvType;
-    private TextView tvFulldname;
-    private TextView tvEmail;
-    private TextView tvPhone;
+    private TextView qrName;
+    private TextView fullName;
+    private TextView email;
+    private TextView phone;
     private ImageView poster;
 
 
@@ -48,20 +47,20 @@ public class VcardFragment extends Fragment
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.details_vcard, container, false);
+        View view = inflater.inflate(R.layout.fragment_details_vcard, container, false);
 
         if (vcard != null)
         {
-            this.tvName = view.findViewById(R.id.nameResult);
-            this.tvFulldname = view.findViewById(R.id.fullNameResult);
-            this.tvEmail = view.findViewById(R.id.emailResult);
-            this.tvPhone = view.findViewById(R.id.phoneResult);
-            this.poster = view.findViewById(R.id.poster);
+            this.qrName = view.findViewById(R.id.details_vcard_qr_name);
+            this.fullName = view.findViewById(R.id.details_vcard_fullName_result);
+            this.email = view.findViewById(R.id.details_vcard_email_result);
+            this.phone = view.findViewById(R.id.details_vcard_phone_result);
+            this.poster = view.findViewById(R.id.details_vcard_poster);
 
-            tvName.setText(vcard.getName());
-            tvFulldname.setText(vcard.getFirstName() + "" + vcard.getLastName());
-            tvEmail.setText(vcard.getEmail());
-            tvPhone.setText(vcard.getPhoneNum());
+            qrName.setText(vcard.getName());
+            fullName.setText(vcard.getFirstName() + "" + vcard.getLastName());
+            email.setText(vcard.getEmail());
+            phone.setText(vcard.getPhoneNum());
 
 
             Picasso.with(getContext()).load(vcard.getImagePath()).into(poster);

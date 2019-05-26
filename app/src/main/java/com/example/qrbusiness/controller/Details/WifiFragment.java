@@ -20,11 +20,10 @@ public class WifiFragment extends Fragment
     private WifiFragment.Callbacks detailsActivity;
     private QRWiFi wiFi;
 
-    private TextView tvName;
-    private TextView tvType;
-    private TextView tvWifiName;
-    private TextView tvPassword;
-    private TextView tvNetType;
+    private TextView qrName;
+    private TextView wifiName;
+    private TextView password;
+    private TextView nettype;
     private ImageView poster;
 
     public WifiFragment() {}
@@ -47,22 +46,20 @@ public class WifiFragment extends Fragment
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.details_wifi, container, false);
+        View view = inflater.inflate(R.layout.fragment_details_wifi, container, false);
 
         if (wiFi != null)
         {
-            this.tvName = view.findViewById(R.id.nameResult);
-            this.tvWifiName = view.findViewById(R.id.wifiNameResult);
-            this.tvPassword = view.findViewById(R.id.passwordResult);
-            this.tvNetType = view.findViewById(R.id.netTypeResult);
-            this.poster = view.findViewById(R.id.poster);
+            this.qrName = view.findViewById(R.id.details_wifi_qr_name);
+            this.wifiName = view.findViewById(R.id.details_wifi_wifi_name_result);
+            this.password = view.findViewById(R.id.details_wifi_password_result);
+            this.nettype = view.findViewById(R.id.details_wifi_nettype_result);
+            this.poster = view.findViewById(R.id.details_wifi_poster);
 
-            tvName.setText(wiFi.getName());
-            tvWifiName.setText(wiFi.getWifiName());
-            tvPassword.setText(wiFi.getPassword());
-            tvNetType.setText(wiFi.getNetType());
-
-            String image = wiFi.getImagePath();
+            qrName.setText(wiFi.getName());
+            wifiName.setText(wiFi.getWifiName());
+            password.setText(wiFi.getPassword());
+            nettype.setText(wiFi.getNetType());
 
             Picasso.with(getContext()).load(wiFi.getImagePath()).into(poster);
         }

@@ -7,7 +7,7 @@
     tools:context=".controller.Create.CreateWebFragment">
 
     <EditText
-        android:id="@+id/urlQRName"
+        android:id="@+id/create_web_qr_name"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -16,10 +16,10 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextviewTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/create_web_title" />
 
     <EditText
-        android:id="@+id/urlResult"
+        android:id="@+id/create_web_url"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -28,10 +28,10 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/urlQRName" />
+        app:layout_constraintTop_toBottomOf="@+id/create_web_qr_name" />
 
     <Button
-        android:id="@+id/urlCreateBtn"
+        android:id="@+id/create_web_create_btn"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
@@ -39,10 +39,10 @@
         android:text="Create QR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/urlResult" />
+        app:layout_constraintTop_toBottomOf="@+id/create_web_url" />
 
     <TextView
-        android:id="@+id/TextviewTitle"
+        android:id="@+id/create_web_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"

@@ -42,7 +42,7 @@ public class NavigationActivity extends AppCompatActivity
 
     private void init()
     {
-        this.toolbar = findViewById(R.id.toolbar);
+        this.toolbar = findViewById(R.id.navigation_toolbar);
         setSupportActionBar(toolbar);
 
         this.drawer = findViewById(R.id.drawer_layout);
