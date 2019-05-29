@@ -3,7 +3,6 @@ package com.example.qrbusiness.controller.Create;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,9 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.qrbusiness.R;
+import com.example.qrbusiness.Service.DialogBuilder;
 import com.example.qrbusiness.controller.Details.DetailsActivity;
 import com.example.qrbusiness.model.ORModels.QRVcard;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,7 +40,7 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
     private QRVcard vcard;
     private EditText nameResult, firstNameResult, lastNameResult, phoneNumberResult, emailResult;
     private Button createBtn;
-
+    private ImageButton isvalidQrnameBtn, isvalidFirstnameBtn, isvalidLastnameBtn, isvalidPhoneBtn, isvalidEmailBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -69,6 +70,19 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
         this.createBtn.setOnClickListener(this);
         this.createBtn.setEnabled(false);
 
+        this.isvalidQrnameBtn = view.findViewById(R.id.fragment_create_vcard_qrname_isvalid_btn);
+        this.isvalidFirstnameBtn = view.findViewById(R.id.fragment_create_vcard_firstname_isvalid_btn);
+        this.isvalidLastnameBtn = view.findViewById(R.id.fragment_create_vcard_lastname_isvalid_btn);
+        this.isvalidPhoneBtn = view.findViewById(R.id.fragment_create_vcard_phone_isvalid_btn);
+        this.isvalidEmailBtn = view.findViewById(R.id.fragment_create_vcard_email_isvalid_btn);
+
+        this.isvalidQrnameBtn.setOnClickListener(this);
+        this.isvalidFirstnameBtn.setOnClickListener(this);
+        this.isvalidLastnameBtn.setOnClickListener(this);
+        this.isvalidPhoneBtn.setOnClickListener(this);
+        this.isvalidEmailBtn.setOnClickListener(this);
+
+
         nameResult.addTextChangedListener(this);
         firstNameResult.addTextChangedListener(this);
         lastNameResult.addTextChangedListener(this);
@@ -79,18 +93,38 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v)
     {
-        if (v.getId() == R.id.create_vcard_create_btn)
+        switch (v.getId())
         {
-            this.vcard = new QRVcard();
-            this.vcard.setName(nameResult.getText().toString());
-            this.vcard.setFirstName(firstNameResult.getText().toString());
-            this.vcard.setLastName(lastNameResult.getText().toString());
-            this.vcard.setPhoneNum(phoneNumberResult.getText().toString());
-            this.vcard.setEmail(emailResult.getText().toString());
+            case R.id.create_vcard_create_btn:
+                this.vcard = new QRVcard();
+                this.vcard.setName(nameResult.getText().toString());
+                this.vcard.setFirstName(firstNameResult.getText().toString());
+                this.vcard.setLastName(lastNameResult.getText().toString());
+                this.vcard.setPhoneNum(phoneNumberResult.getText().toString());
+                this.vcard.setEmail(emailResult.getText().toString());
+                uploadImage();
+                break;
 
-            uploadImage();
+            case R.id.fragment_create_vcard_qrname_isvalid_btn:
+                DialogBuilder.createDialog("QR name must be over 3 letters long.", getContext()).show();
+                break;
+
+            case R.id.fragment_create_vcard_firstname_isvalid_btn:
+                DialogBuilder.createDialog("First name must be over 3 letters long, and cant contain spaces.", getContext()).show();
+                break;
+
+            case R.id.fragment_create_vcard_lastname_isvalid_btn:
+                DialogBuilder.createDialog("Last name must be over 3 letters long, and cant contain spaces.", getContext()).show();
+                break;
+
+            case R.id.fragment_create_vcard_phone_isvalid_btn:
+                DialogBuilder.createDialog("Phone number must only contain numbers and be 8 numbers long.", getContext()).show();
+                break;
+
+            case R.id.fragment_create_vcard_email_isvalid_btn:
+                DialogBuilder.createDialog("Email must contain '@' and '.' and be over 3 characters long.", getContext()).show();
+                break;
         }
-
     }
 
     private void uploadQRModel(Uri uri)
@@ -213,59 +247,54 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
         boolean isValidPhoneNumber = false;
         boolean isValidEmail = false;
 
-        if (QRName != null && !QRName.isEmpty() && QRName.length() >= 3)
+        if (!QRName.isEmpty() && QRName.length() >= 3)
         {
             isValidName = true;
-            this.nameResult.setBackgroundColor(Color.RED);
-            System.out.println("name valid");
+            isvalidQrnameBtn.setImageResource(R.drawable.ic_correct);
         }
         else
         {
-            this.nameResult.setBackgroundColor(Color.WHITE);
+            isvalidQrnameBtn.setImageResource(R.drawable.ic_incorrect);
         }
 
-        if (firstName != null && !firstName.isEmpty() && firstName.length() >= 3 && !firstName.contains(" "))
+        if (!firstName.isEmpty() && firstName.length() >= 3 && !firstName.contains(" "))
         {
             isValidFirstName = true;
-            this.firstNameResult.setBackgroundColor(Color.RED);
-            System.out.println("firstname valid");
+            isvalidFirstnameBtn.setImageResource(R.drawable.ic_correct);
         }
         else
         {
-            this.firstNameResult.setBackgroundColor(Color.WHITE);
+            isvalidFirstnameBtn.setImageResource(R.drawable.ic_incorrect);
         }
 
-        if (lastName != null && !lastName.isEmpty() && lastName.length() >= 3 && !lastName.contains(" "))
+        if (!lastName.isEmpty() && lastName.length() >= 3 && !lastName.contains(" "))
         {
             isValidLastName = true;
-            this.lastNameResult.setBackgroundColor(Color.RED);
-            System.out.println("lastname valid");
+            isvalidLastnameBtn.setImageResource(R.drawable.ic_correct);
         }
         else
         {
-            this.lastNameResult.setBackgroundColor(Color.WHITE);
+            isvalidLastnameBtn.setImageResource(R.drawable.ic_incorrect);
         }
 
-        if (phoneNumber != null && !phoneNumber.isEmpty() && phoneNumber.length() == 8)
+        if (!phoneNumber.isEmpty() && phoneNumber.length() == 8)
         {
             isValidPhoneNumber = true;
-            this.phoneNumberResult.setBackgroundColor(Color.RED);
-            System.out.println("phone valid");
+            isvalidPhoneBtn.setImageResource(R.drawable.ic_correct);
         }
         else
         {
-            this.phoneNumberResult.setBackgroundColor(Color.WHITE);
+            isvalidPhoneBtn.setImageResource(R.drawable.ic_incorrect);
         }
 
-        if (email != null && !email.isEmpty() && email.length() > 3 && email.contains("@") && email.contains("."))
+        if (!email.isEmpty() && email.length() > 3 && email.contains("@") && email.contains("."))
         {
             isValidEmail = true;
-            this.emailResult.setBackgroundColor(Color.RED);
-            System.out.println("email valid");
+            isvalidEmailBtn.setImageResource(R.drawable.ic_correct);
         }
         else
         {
-            this.emailResult.setBackgroundColor(Color.WHITE);
+            isvalidEmailBtn.setImageResource(R.drawable.ic_incorrect);
         }
 
         if (isValidName && isValidFirstName && isValidLastName && isValidPhoneNumber && isValidEmail)
@@ -276,10 +305,5 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
         {
             this.createBtn.setEnabled(false);
         }
-    }
-
-    public interface Callbacks
-    {
-        void onBtnCreateVcard(QRVcard vcard);
     }
 }
