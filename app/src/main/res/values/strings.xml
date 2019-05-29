@@ -7,4 +7,27 @@
     <string name="storage_path">gs://qr-business.appspot.com/QR_Images/</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="contact_qr">Contact QR</string>
+    <string name="save">save</string>
+    <string name="qr_name">qr name</string>
+    <string name="phone">phone</string>
+    <string name="first_name">first name</string>
+    <string name="last_name">last name</string>
+    <string name="url_qr">URL QR</string>
+    <string name="website_url">website url</string>
+    <string name="wifi_network_name">wifi network name</string>
+    <string name="wifi_qr">WiFi QR</string>
+    <string name="fullname">full name:</string>
+    <string name="emailIndicator">Email:</string>
+    <string name="phoneIdencator">Phone:</string>
+    <string name="url">url:</string>
+    <string name="vcard_for_business">Vcard for business</string>
+    <string name="wifi_name">wifi name:</string>
+    <string name="passwordIndicator">password:</string>
+    <string name="net_type">Net type:</string>
+    <string name="user">User</string>
 </resources>

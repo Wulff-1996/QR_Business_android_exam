@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="175dp"
     android:background="@color/colorBlack"
@@ -10,22 +11,23 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="75dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/qr_image_icon" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="User"
+        android:text="@string/user"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#FFFFFF" />
+        android:textColor="@color/colorAccent" />
 
     <TextView
         android:id="@+id/nav_header_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="bob@emai.com"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#FFFFFF" />
+        android:textColor="@color/colorAccent"
+        tools:text="wulffjakob@gmail.com" />
 
 </LinearLayout>

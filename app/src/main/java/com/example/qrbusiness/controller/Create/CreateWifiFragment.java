@@ -3,12 +3,12 @@ package com.example.qrbusiness.controller.Create;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,10 +17,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.qrbusiness.R;
+import com.example.qrbusiness.Service.DialogBuilder;
 import com.example.qrbusiness.controller.Details.DetailsActivity;
 import com.example.qrbusiness.model.ORModels.QRWiFi;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,6 +43,7 @@ public class CreateWifiFragment extends Fragment implements View.OnClickListener
     private EditText nameResult, wifiNameResult, passwordResult;
     private Spinner dropdown;
     private Button createBtn;
+    private ImageButton isvalidQrnameBtn, isvalidWifiNameBtn, isvalidPasswordBtn;
 
 
     @Override
@@ -67,6 +70,13 @@ public class CreateWifiFragment extends Fragment implements View.OnClickListener
         this.passwordResult = view.findViewById(R.id.create_wifi_password);
         this.dropdown = view.findViewById(R.id.create_wifi_nettypes);
         this.createBtn = view.findViewById(R.id.create_wifi_create_btn);
+        this.isvalidQrnameBtn = view.findViewById(R.id.fragment_create_wifi_qrname_isvalid_btn);
+        this.isvalidWifiNameBtn = view.findViewById(R.id.fragment_create_wifi_wifi_name_isvalid_btn);
+        this.isvalidPasswordBtn = view.findViewById(R.id.fragment_create_wifi_password_isvalid_btn);
+
+        isvalidQrnameBtn.setOnClickListener(this);
+        isvalidWifiNameBtn.setOnClickListener(this);
+        isvalidPasswordBtn.setOnClickListener(this);
 
         this.createBtn.setOnClickListener(this);
         this.createBtn.setEnabled(false);
@@ -85,14 +95,28 @@ public class CreateWifiFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v)
     {
-        if (v.getId() == R.id.create_wifi_create_btn)
+        switch (v.getId())
         {
-            this.wifi = new QRWiFi();
-            this.wifi.setName(nameResult.getText().toString());
-            this.wifi.setWifiName(wifiNameResult.getText().toString());
-            this.wifi.setPassword(passwordResult.getText().toString());
-            this.wifi.setNetType(dropdown.getSelectedItem().toString());
-            uploadImage();
+            case R.id.create_wifi_create_btn:
+                this.wifi = new QRWiFi();
+                this.wifi.setName(nameResult.getText().toString());
+                this.wifi.setWifiName(wifiNameResult.getText().toString());
+                this.wifi.setPassword(passwordResult.getText().toString());
+                this.wifi.setNetType(dropdown.getSelectedItem().toString());
+                uploadImage();
+                break;
+
+            case R.id.fragment_create_wifi_qrname_isvalid_btn:
+                DialogBuilder.createDialog("QR name must be 3 letters long or more.", getContext()).show();
+                break;
+
+            case R.id.fragment_create_wifi_wifi_name_isvalid_btn:
+                DialogBuilder.createDialog("Wifi name must be 1 letters long or more and cant contain spaces.", getContext()).show();
+                break;
+
+            case R.id.fragment_create_wifi_password_isvalid_btn:
+                DialogBuilder.createDialog("Password cannot be empty.", getContext()).show();
+                break;
         }
     }
 
@@ -208,55 +232,50 @@ public class CreateWifiFragment extends Fragment implements View.OnClickListener
         String QRName = nameResult.getText().toString();
         String wifiName = wifiNameResult.getText().toString();
         String password = passwordResult.getText().toString();
-        String netType = dropdown.getSelectedItem().toString();
 
         boolean isValidName = false;
         boolean isValidWifiName = false;
         boolean isValidPassword = false;
-        boolean isValidNetType = false;
 
-        if (QRName != null && !QRName.isEmpty() && QRName.length() >= 3)
+        if (QRName.length() >= 3)
         {
             isValidName = true;
-            this.nameResult.setBackgroundColor(Color.RED);
+            isvalidQrnameBtn.setImageResource(R.drawable.ic_correct);
         }
         else
         {
-            this.nameResult.setBackgroundColor(Color.WHITE);
+            isvalidQrnameBtn.setImageResource(R.drawable.ic_incorrect);
         }
 
-        if (wifiName != null && !wifiName.isEmpty() && wifiName.length() >= 3)
+        if (wifiName.length() >= 1 && !wifiName.contains(" "))
         {
             isValidWifiName = true;
-            this.wifiNameResult.setBackgroundColor(Color.RED);
+            isvalidWifiNameBtn.setImageResource(R.drawable.ic_correct);
         }
         else
         {
-            this.wifiNameResult.setBackgroundColor(Color.WHITE);
+            isvalidWifiNameBtn.setImageResource(R.drawable.ic_incorrect);
         }
 
-        if (password != null && !password.isEmpty())
+        if (!password.isEmpty())
         {
             isValidPassword = true;
-            this.passwordResult.setBackgroundColor(Color.RED);
+            isvalidPasswordBtn.setImageResource(R.drawable.ic_correct);
         }
         else
         {
-            this.passwordResult.setBackgroundColor(Color.WHITE);
+            isvalidPasswordBtn.setImageResource(R.drawable.ic_incorrect);
         }
 
-        if (netType != null && !netType.isEmpty() && !password.equals("None"))
+        if (isValidName && isValidWifiName && isValidPassword)
         {
-            isValidNetType = true;
-        }
-
-        if (isValidName && isValidWifiName && isValidPassword && isValidNetType)
-        {
-            this.createBtn.setEnabled(true);
+            createBtn.setEnabled(true);
+            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_green));
         }
         else
         {
             this.createBtn.setEnabled(false);
+            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_red));
         }
     }
 }

@@ -21,9 +21,9 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorBlack"
             android:elevation="4dp"
-            app:titleTextColor="@color/colorAccent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextColor="@color/colorAccent"
             tools:targetApi="lollipop" />
 
         <FrameLayout
@@ -39,8 +39,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@android:color/white"
         app:headerLayout="@layout/nav_header"
-        app:itemIconTint="@color/colorAccent"
+        app:itemIconTint="@color/colorPrimaryDark"
+        app:itemTextColor="@color/colorPrimary"
         app:menu="@menu/drawer_menu" />
 
 

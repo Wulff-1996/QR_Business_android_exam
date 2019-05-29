@@ -3,12 +3,12 @@ package com.example.qrbusiness.controller.Create;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -16,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.qrbusiness.R;
+import com.example.qrbusiness.Service.DialogBuilder;
 import com.example.qrbusiness.controller.Details.DetailsActivity;
 import com.example.qrbusiness.model.ORModels.QRWeb;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,6 +40,7 @@ public class CreateWebFragment extends Fragment implements View.OnClickListener,
     private QRWeb web;
     private EditText nameResult, urlResult;
     private Button createBtn;
+    private ImageButton isvalidQrnameBtn, isvalidUrlBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -63,6 +66,10 @@ public class CreateWebFragment extends Fragment implements View.OnClickListener,
         this.createBtn = view.findViewById(R.id.create_web_create_btn);
         this.createBtn.setOnClickListener(this);
         this.createBtn.setEnabled(false);
+        this.isvalidQrnameBtn = view.findViewById(R.id.fragment_create_web_isvalid_qrname_btn);
+        this.isvalidUrlBtn = view.findViewById(R.id.fragment_create_web_isvalid_url_btn);
+        isvalidQrnameBtn.setOnClickListener(this);
+        isvalidUrlBtn.setOnClickListener(this);
 
         this.nameResult.addTextChangedListener(this);
         this.urlResult.addTextChangedListener(this);
@@ -71,15 +78,23 @@ public class CreateWebFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onClick(View v)
     {
-        if (v.getId() == R.id.create_web_create_btn)
+        switch (v.getId())
         {
-            this.web = new QRWeb();
-            this.web.setName(nameResult.getText().toString());
-            this.web.setUrl(urlResult.getText().toString());
+            case R.id.create_web_create_btn:
+                this.web = new QRWeb();
+                this.web.setName(nameResult.getText().toString());
+                this.web.setUrl(urlResult.getText().toString());
+                uploadImage();
+                break;
 
-            uploadImage();
+            case R.id.fragment_create_web_isvalid_qrname_btn:
+                DialogBuilder.createDialog("QR name must be 3 letters long or more.", getContext()).show();
+                break;
+
+            case R.id.fragment_create_web_isvalid_url_btn:
+                DialogBuilder.createDialog("Url must contain 'www' and a top level domain fx '.com'", getContext()).show();
+                break;
         }
-
     }
 
     private void uploadQRModel(Uri uri)
@@ -196,35 +211,37 @@ public class CreateWebFragment extends Fragment implements View.OnClickListener,
         boolean isValidName = false;
         boolean isValidUrl = false;
 
-        if (QRName != null && !QRName.isEmpty() && QRName.length() >= 3)
+        if (!QRName.isEmpty() && QRName.length() >= 3)
         {
             isValidName = true;
-            this.nameResult.setBackgroundColor(Color.RED);
+            isvalidQrnameBtn.setImageResource(R.drawable.ic_correct);
         }
         else
         {
-            this.nameResult.setBackgroundColor(Color.WHITE);
+            isvalidQrnameBtn.setImageResource(R.drawable.ic_incorrect);
         }
 
-        if (url != null && !url.isEmpty() && url.length() >= 3)
+        if (!url.isEmpty() && url.length() >= 5 && url.contains("www."))
         {
             isValidUrl = true;
-            this.urlResult.setBackgroundColor(Color.RED);
+            isvalidUrlBtn.setImageResource(R.drawable.ic_correct);
         }
         else
         {
-            this.urlResult.setBackgroundColor(Color.WHITE);
+            isvalidUrlBtn.setImageResource(R.drawable.ic_incorrect);
         }
 
 
 
         if (isValidName && isValidUrl)
         {
-            this.createBtn.setEnabled(true);
+            createBtn.setEnabled(true);
+            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_green));
         }
         else
         {
             this.createBtn.setEnabled(false);
+            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_red));
         }
     }
 }
