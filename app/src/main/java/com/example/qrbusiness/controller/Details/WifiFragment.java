@@ -1,6 +1,7 @@
 package com.example.qrbusiness.controller.Details;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,12 +9,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qrbusiness.R;
+import com.example.qrbusiness.Service.DialogBuilder;
+import com.example.qrbusiness.Utils.ImageUtils;
 import com.example.qrbusiness.model.ORModels.QRWiFi;
-import com.squareup.picasso.Picasso;
 
 public class WifiFragment extends Fragment
 {
@@ -25,6 +28,7 @@ public class WifiFragment extends Fragment
     private TextView password;
     private TextView nettype;
     private ImageView poster;
+    private ImageButton deleteBtn;
 
     public WifiFragment() {}
 
@@ -55,13 +59,23 @@ public class WifiFragment extends Fragment
             this.password = view.findViewById(R.id.details_wifi_password_result);
             this.nettype = view.findViewById(R.id.details_wifi_nettype_result);
             this.poster = view.findViewById(R.id.details_wifi_poster);
+            this.deleteBtn = view.findViewById(R.id.fragment_wifi_details_delete_btn);
+            deleteBtn.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    DialogBuilder.deleteDialog(wiFi.getId(), getActivity()).show();
+                }
+            });
 
             qrName.setText(wiFi.getName());
             wifiName.setText(wiFi.getWifiName());
             password.setText(wiFi.getPassword());
             nettype.setText(wiFi.getNetType());
 
-            Picasso.with(getContext()).load(wiFi.getImagePath()).into(poster);
+            Bitmap bitmap = ImageUtils.base64ToBitmap(wiFi.getImage());
+            poster.setImageBitmap(bitmap);
         }
 
         return view;

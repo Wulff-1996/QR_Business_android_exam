@@ -41,8 +41,8 @@
         android:layout_gravity="start"
         android:background="@android:color/white"
         app:headerLayout="@layout/nav_header"
-        app:itemIconTint="@color/colorPrimaryDark"
-        app:itemTextColor="@color/colorPrimary"
+        app:itemIconTint="@color/colorBlack"
+        app:itemTextColor="@color/colorBlack"
         app:menu="@menu/drawer_menu" />
 
 

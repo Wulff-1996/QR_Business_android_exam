@@ -4,6 +4,4 @@
     android:id="@+id/createContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.Create.CreateActivity">
-
-</android.support.v7.widget.ContentFrameLayout>
+    tools:context=".controller.Create.CreateActivity" />

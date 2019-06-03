@@ -58,7 +58,7 @@ public class QRWiFi extends QR
             this.setId(b.getString(QR.ID));
             this.setName(b.getString(QR.NAME));
             this.setQrType(b.getString(QR.QR_TYPE));
-            this.setImagePath(b.getString(QR.IMAGE_PATH));
+            this.setImage(b.getString(QR.IMAGE));
         }
     }
 
@@ -72,7 +72,7 @@ public class QRWiFi extends QR
         b.putString(QR.ID, this.getId());
         b.putString(QR.NAME, this.getName());
         b.putString(QR.QR_TYPE, this.getQrType());
-        b.putString(QR.IMAGE_PATH, this.getImagePath());
+        b.putString(QR.IMAGE, this.getImage());
         return b;
     }
 }

@@ -59,7 +59,6 @@ public class LibraryFragment extends Fragment implements
         mGridView.setAdapter(mGridViewAdapter);
         mGridView.setOnScrollListener(this);
         mGridView.setOnItemClickListener(this);
-        fetchQRObjects();
 
         return view;
     }
@@ -87,7 +86,7 @@ public class LibraryFragment extends Fragment implements
 
                                             //  map to griditem
                                             GridItem gridItem = new GridItem();
-                                            gridItem.setImage(web.getImagePath());
+                                            gridItem.setImage(web.getImage());
                                             gridItem.setName(web.getName());
                                             gridItem.setIcon(getResources().getDrawable(R.drawable.ic_url));
                                             mGridData.add(gridItem);
@@ -101,7 +100,7 @@ public class LibraryFragment extends Fragment implements
 
                                             //  map to griditem
                                             gridItem = new GridItem();
-                                            gridItem.setImage(wifi.getImagePath());
+                                            gridItem.setImage(wifi.getImage());
                                             gridItem.setName(wifi.getName());
                                             gridItem.setIcon(getResources().getDrawable(R.drawable.ic_wifi));
                                             mGridData.add(gridItem);
@@ -114,7 +113,7 @@ public class LibraryFragment extends Fragment implements
 
                                             //  map to griditem
                                             gridItem = new GridItem();
-                                            gridItem.setImage(vcard.getImagePath());
+                                            gridItem.setImage(vcard.getImage());
                                             gridItem.setName(vcard.getName());
                                             gridItem.setIcon(getResources().getDrawable(R.drawable.ic_vcard));
                                             mGridData.add(gridItem);
@@ -153,6 +152,14 @@ public class LibraryFragment extends Fragment implements
 
         Intent i = new Intent(getActivity(), DetailsActivity.class);
         i.putExtra("BUNDLE", QRList.get(position).toBundle());
-        startActivityForResult(i, 1);
+        startActivity(i);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        mGridViewAdapter.clear();
+        fetchQRObjects();
     }
 }

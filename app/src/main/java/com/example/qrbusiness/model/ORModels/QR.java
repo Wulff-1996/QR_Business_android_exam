@@ -6,26 +6,21 @@ public abstract class QR
 {
     private String id;
     private String name, qrType;
-    private String imagePath;
+    private String image;
 
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String QR_TYPE = "qrType";
-    public static final String IMAGE_PATH = "imagePath";
+    public static final String IMAGE = "image";
 
     public QR() {}
 
-    public QR(String id, String name, String qrType, String imagePath)
+    public QR(String id, String name, String qrType, String image)
     {
         this.id = id;
         this.name = name;
         this.qrType = qrType;
-        this.imagePath = imagePath;
-    }
-
-    public QR(String imagePath)
-    {
-        this.imagePath = imagePath;
+        this.image = image;
     }
 
     public String getId()
@@ -53,29 +48,44 @@ public abstract class QR
         return qrType;
     }
 
+    public static String getIMAGE()
+    {
+        return IMAGE;
+    }
+
     public void setQrType(String qrType)
     {
         this.qrType = qrType;
     }
 
-    public String getImagePath()
+    public String getImage()
     {
-        return imagePath;
+        return image;
     }
 
-    public void setImagePath(String imagePath)
+    public void setImage(String image)
     {
-        this.imagePath = imagePath;
+        this.image = image;
+    }
+
+    public static String getID()
+    {
+        return ID;
+    }
+
+    public static String getNAME()
+    {
+        return NAME;
     }
 
     @Override
     public String toString()
     {
         return "QR{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", qrType='" + qrType + '\'' +
-                ", imagePath='" + imagePath + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 
@@ -87,7 +97,8 @@ public abstract class QR
             this.id = b.getString(ID);
             this.name = b.getString(NAME);
             this.qrType = b.getString(QR_TYPE);
-            this.imagePath = b.getString(IMAGE_PATH);
+            this.image = b.getString(IMAGE);
+
         }
     }
 
@@ -98,7 +109,7 @@ public abstract class QR
         b.putString(ID, this.id);
         b.putString(NAME, this.name);
         b.putString(QR_TYPE, this.qrType);
-        b.putString(IMAGE_PATH, this.imagePath);
+        b.putString(IMAGE, this.image);
         return b;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.qrbusiness.controller.Details;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,12 +9,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qrbusiness.R;
+import com.example.qrbusiness.Service.DialogBuilder;
+import com.example.qrbusiness.Utils.ImageUtils;
 import com.example.qrbusiness.model.ORModels.QRVcard;
-import com.squareup.picasso.Picasso;
 
 public class VcardFragment extends Fragment
 {
@@ -25,6 +28,7 @@ public class VcardFragment extends Fragment
     private TextView email;
     private TextView phone;
     private ImageView poster;
+    private ImageButton deleteBtn;
 
 
     public VcardFragment() {}
@@ -56,14 +60,23 @@ public class VcardFragment extends Fragment
             this.email = view.findViewById(R.id.details_vcard_email_result);
             this.phone = view.findViewById(R.id.details_vcard_phone_result);
             this.poster = view.findViewById(R.id.details_vcard_poster);
+            this.deleteBtn = view.findViewById(R.id.fragment_vcard_details_delete_btn);
+            deleteBtn.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    DialogBuilder.deleteDialog(vcard.getId(), getActivity()).show();
+                }
+            });
 
             qrName.setText(vcard.getName());
-            fullName.setText(vcard.getFirstName() + "" + vcard.getLastName());
+            fullName.setText(vcard.getFirstName() + " " + vcard.getLastName());
             email.setText(vcard.getEmail());
             phone.setText(vcard.getPhoneNum());
 
-
-            Picasso.with(getContext()).load(vcard.getImagePath()).into(poster);
+            Bitmap bitmap = ImageUtils.base64ToBitmap(vcard.getImage());
+            poster.setImageBitmap(bitmap);
         }
 
         return view;

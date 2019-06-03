@@ -1,9 +1,7 @@
 package com.example.qrbusiness.controller.Create;
 
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.qrbusiness.R;
 import com.example.qrbusiness.Service.DialogBuilder;
+import com.example.qrbusiness.Utils.ImageUtils;
 import com.example.qrbusiness.controller.Details.DetailsActivity;
 import com.example.qrbusiness.model.ORModels.QRWiFi;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,12 +29,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.util.UUID;
+import net.glxn.qrgen.android.QRCode;
+
+import it.auron.library.wifi.WifiCard;
 
 public class CreateWifiFragment extends Fragment implements View.OnClickListener, TextWatcher
 {
@@ -103,7 +100,14 @@ public class CreateWifiFragment extends Fragment implements View.OnClickListener
                 this.wifi.setWifiName(wifiNameResult.getText().toString());
                 this.wifi.setPassword(passwordResult.getText().toString());
                 this.wifi.setNetType(dropdown.getSelectedItem().toString());
-                uploadImage();
+
+                WifiCard wifiCard = new WifiCard();
+                wifiCard.setSid(wifi.getWifiName());
+                wifiCard.setPassword(wifi.getPassword());
+                wifiCard.setType(wifi.getNetType());
+                Bitmap bitmap = QRCode.from(wifiCard.buildString()).bitmap();
+                this.wifi.setImage(ImageUtils.bitmapToBase64(bitmap));
+                uploadQRModel();
                 break;
 
             case R.id.fragment_create_wifi_qrname_isvalid_btn:
@@ -120,10 +124,8 @@ public class CreateWifiFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    private void uploadQRModel(Uri uri)
+    private void uploadQRModel()
     {
-        this.wifi.setImagePath(uri.toString());
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         final DocumentReference documentReference = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).collection("QR_IDs").document();
@@ -153,63 +155,6 @@ public class CreateWifiFragment extends Fragment implements View.OnClickListener
                     public void onFailure(@NonNull Exception e)
                     {
                         Toast.makeText(getActivity(), "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    private void uploadImage()
-    {
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Uploading...");
-        progressDialog.show();
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference();
-
-        Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                "://" + getResources().getResourcePackageName(R.drawable.qr_test)
-                + '/' + getResources().getResourceTypeName(R.drawable.qr_test) + '/' + getResources().getResourceEntryName(R.drawable.qr_test) );
-
-        final StorageReference ref = storageReference.child("QR_Images/" + UUID.randomUUID().toString());
-        ref.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
-                {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-                    {
-                        progressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
-
-                        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
-                        {
-                            @Override
-                            public void onSuccess(Uri uri)
-                            {
-                                // upload the model
-                                uploadQRModel(uri);
-                            }
-                        });
-
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener()
-                {
-                    @Override
-                    public void onFailure(@NonNull Exception e)
-                    {
-                        progressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>()
-                {
-                    @Override
-                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot)
-                    {
-                        double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                .getTotalByteCount());
-                        progressDialog.setMessage("Uploaded "+(int)progress+"%");
                     }
                 });
     }

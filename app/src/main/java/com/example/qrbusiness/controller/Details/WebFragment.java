@@ -1,6 +1,7 @@
 package com.example.qrbusiness.controller.Details;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,12 +9,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qrbusiness.R;
+import com.example.qrbusiness.Service.DialogBuilder;
+import com.example.qrbusiness.Utils.ImageUtils;
 import com.example.qrbusiness.model.ORModels.QRWeb;
-import com.squareup.picasso.Picasso;
 
 public class WebFragment extends Fragment
 {
@@ -23,6 +26,7 @@ public class WebFragment extends Fragment
     private TextView tvName;
     private TextView tvUrl;
     private ImageView poster;
+    private ImageButton deleteBtn;
 
     public WebFragment() {}
 
@@ -51,11 +55,21 @@ public class WebFragment extends Fragment
             this.tvName = view.findViewById(R.id.details_web_qr_name);
             this.tvUrl = view.findViewById(R.id.details_web_url_result);
             this.poster = view.findViewById(R.id.details_web_poster);
+            this.deleteBtn = view.findViewById(R.id.fragment_web_details_delete_btn);
+            deleteBtn.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    DialogBuilder.deleteDialog(web.getId(), getActivity()).show();
+                }
+            });
 
             tvName.setText(web.getName());
             tvUrl.setText(web.getUrl());
 
-            Picasso.with(getContext()).load(web.getImagePath()).into(poster);
+            Bitmap bitmap = ImageUtils.base64ToBitmap(web.getImage());
+            poster.setImageBitmap(bitmap);
         }
 
         return view;

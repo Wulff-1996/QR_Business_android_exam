@@ -2,6 +2,7 @@ package com.example.qrbusiness.model;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qrbusiness.R;
-import com.squareup.picasso.Picasso;
+import com.example.qrbusiness.Utils.ImageUtils;
 
 import java.util.ArrayList;
 
@@ -69,7 +70,9 @@ public class GridViewAdapter extends ArrayAdapter<GridItem>
         GridItem item = mGridData.get(position);
         if (item.getImage() != null)
         {
-            Picasso.with(mContext).load(item.getImage()).into(holder.imageView);
+            Bitmap bitmap = ImageUtils.base64ToBitmap(item.getImage());
+            holder.imageView.setImageBitmap(bitmap);
+            //Picasso.with(mContext).load(item.getImage()).into(holder.imageView);
         }
         if (item.getName() != null)
         {
