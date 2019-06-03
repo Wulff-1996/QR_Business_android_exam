@@ -1,6 +1,5 @@
 package com.example.qrbusiness.controller.Details;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,9 +19,7 @@ import com.example.qrbusiness.model.ORModels.QRWiFi;
 
 public class WifiFragment extends Fragment
 {
-    private WifiFragment.Callbacks detailsActivity;
     private QRWiFi wiFi;
-
     private TextView qrName;
     private TextView wifiName;
     private TextView password;
@@ -79,22 +76,5 @@ public class WifiFragment extends Fragment
         }
 
         return view;
-    }
-
-    public interface Callbacks
-    {
-        public void onAddToListClicked(QRWiFi wiFi);
-    }
-
-    public void btnOnQRAdded()
-    {
-        detailsActivity.onAddToListClicked(this.wiFi);
-    }
-
-    @Override
-    public void onAttach(Activity activity)
-    {
-        super.onAttach(activity);
-        this.detailsActivity = (WifiFragment.Callbacks) activity;
     }
 }

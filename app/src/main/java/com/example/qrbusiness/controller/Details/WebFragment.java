@@ -1,6 +1,5 @@
 package com.example.qrbusiness.controller.Details;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +19,6 @@ import com.example.qrbusiness.model.ORModels.QRWeb;
 
 public class WebFragment extends Fragment
 {
-    private WebFragment.Callbacks detailsActivity;
     private QRWeb web;
 
     private TextView tvName;
@@ -73,22 +71,5 @@ public class WebFragment extends Fragment
         }
 
         return view;
-    }
-
-    public interface Callbacks
-    {
-        public void onAddToListClicked(QRWeb web);
-    }
-
-    public void btnOnQRAdded()
-    {
-        detailsActivity.onAddToListClicked(this.web);
-    }
-
-    @Override
-    public void onAttach(Activity activity)
-    {
-        super.onAttach(activity);
-        this.detailsActivity = (WebFragment.Callbacks) activity;
     }
 }

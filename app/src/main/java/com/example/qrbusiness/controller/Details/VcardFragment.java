@@ -1,6 +1,5 @@
 package com.example.qrbusiness.controller.Details;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +19,6 @@ import com.example.qrbusiness.model.ORModels.QRVcard;
 
 public class VcardFragment extends Fragment
 {
-    private Callbacks detailsActivity;
     private QRVcard vcard;
 
     private TextView qrName;
@@ -80,22 +78,5 @@ public class VcardFragment extends Fragment
         }
 
         return view;
-    }
-
-    public interface Callbacks
-    {
-        public void onAddToListClicked(QRVcard vcard);
-    }
-
-    public void btnOnQRAdded()
-    {
-        detailsActivity.onAddToListClicked(this.vcard);
-    }
-
-    @Override
-    public void onAttach(Activity activity)
-    {
-        super.onAttach(activity);
-        this.detailsActivity = (Callbacks) activity;
     }
 }

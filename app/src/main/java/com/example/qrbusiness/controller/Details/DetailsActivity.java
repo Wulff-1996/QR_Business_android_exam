@@ -7,15 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.qrbusiness.R;
 import com.example.qrbusiness.model.ORModels.QR;
-import com.example.qrbusiness.model.ORModels.QRVcard;
-import com.example.qrbusiness.model.ORModels.QRWeb;
-import com.example.qrbusiness.model.ORModels.QRWiFi;
 
 public class DetailsActivity extends AppCompatActivity
-        implements
-        VcardFragment.Callbacks,
-        WebFragment.Callbacks,
-        WifiFragment.Callbacks
 {
     private Bundle bundle;
 
@@ -63,23 +56,5 @@ public class DetailsActivity extends AppCompatActivity
                 break;
 
         }
-    }
-
-    @Override
-    public void onAddToListClicked(QRVcard vcard)
-    {
-
-    }
-
-    @Override
-    public void onAddToListClicked(QRWeb web)
-    {
-
-    }
-
-    @Override
-    public void onAddToListClicked(QRWiFi wiFi)
-    {
-
     }
 }
