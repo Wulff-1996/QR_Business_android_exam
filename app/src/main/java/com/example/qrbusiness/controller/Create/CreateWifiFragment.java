@@ -40,7 +40,7 @@ public class CreateWifiFragment extends Fragment implements View.OnClickListener
     private EditText nameResult, wifiNameResult, passwordResult;
     private Spinner dropdown;
     private Button createBtn;
-    private ImageButton isvalidQrnameBtn, isvalidWifiNameBtn, isvalidPasswordBtn;
+    private ImageButton isvalidQrnameBtn, isvalidWifiNameBtn, isvalidPasswordBtn, isvalidNetTypeBtn;
 
 
     @Override
@@ -70,10 +70,12 @@ public class CreateWifiFragment extends Fragment implements View.OnClickListener
         this.isvalidQrnameBtn = view.findViewById(R.id.fragment_create_wifi_qrname_isvalid_btn);
         this.isvalidWifiNameBtn = view.findViewById(R.id.fragment_create_wifi_wifi_name_isvalid_btn);
         this.isvalidPasswordBtn = view.findViewById(R.id.fragment_create_wifi_password_isvalid_btn);
+        this.isvalidNetTypeBtn = view.findViewById(R.id.fragment_create_wifi_nettype_isvalid_btn);
 
         isvalidQrnameBtn.setOnClickListener(this);
         isvalidWifiNameBtn.setOnClickListener(this);
         isvalidPasswordBtn.setOnClickListener(this);
+        isvalidNetTypeBtn.setOnClickListener(this);
 
         this.createBtn.setOnClickListener(this);
         this.createBtn.setEnabled(false);
@@ -120,6 +122,10 @@ public class CreateWifiFragment extends Fragment implements View.OnClickListener
 
             case R.id.fragment_create_wifi_password_isvalid_btn:
                 DialogBuilder.createDialog("Password cannot be empty.", getContext()).show();
+                break;
+
+            case R.id.fragment_create_wifi_nettype_isvalid_btn:
+                DialogBuilder.createDialog("Nettype cannot be none.", getContext()).show();
                 break;
         }
     }
@@ -177,10 +183,12 @@ public class CreateWifiFragment extends Fragment implements View.OnClickListener
         String QRName = nameResult.getText().toString();
         String wifiName = wifiNameResult.getText().toString();
         String password = passwordResult.getText().toString();
+        String nettype = dropdown.getSelectedItem().toString();
 
         boolean isValidName = false;
         boolean isValidWifiName = false;
         boolean isValidPassword = false;
+        boolean isValidNettype = false;
 
         if (QRName.length() >= 3)
         {
@@ -212,15 +220,26 @@ public class CreateWifiFragment extends Fragment implements View.OnClickListener
             isvalidPasswordBtn.setImageResource(R.drawable.ic_incorrect);
         }
 
+        if (!nettype.isEmpty() && !nettype.equals("None"))
+        {
+            isValidNettype = true;
+            isvalidNetTypeBtn.setImageResource(R.drawable.ic_correct);
+        }
+        else
+        {
+            isvalidNetTypeBtn.setImageResource(R.drawable.ic_incorrect);
+        }
+
+
         if (isValidName && isValidWifiName && isValidPassword)
         {
             createBtn.setEnabled(true);
-            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_green));
+            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_highlighted));
         }
         else
         {
             this.createBtn.setEnabled(false);
-            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_red));
+            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_unhighligted));
         }
     }
 }

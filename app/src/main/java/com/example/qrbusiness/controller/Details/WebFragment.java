@@ -34,7 +34,7 @@ public class WebFragment extends Fragment
         super.onCreate(savedInstanceState);
 
         Bundle b = getArguments();
-        if (b != null && b.containsKey(web.URL))
+        if (b != null && b.containsKey(QRWeb.URL))
         {
             web = new QRWeb(b);
         }

@@ -35,7 +35,7 @@ public class WifiFragment extends Fragment
         super.onCreate(savedInstanceState);
 
         Bundle b = getArguments();
-        if (b != null && b.containsKey(wiFi.WIFI_NAME))
+        if (b != null && b.containsKey(QRWiFi.WIFI_NAME))
         {
             wiFi = new QRWiFi(b);
         }

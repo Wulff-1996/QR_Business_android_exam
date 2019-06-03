@@ -176,12 +176,12 @@ public class CreateWebFragment extends Fragment implements View.OnClickListener,
         if (isValidName && isValidUrl)
         {
             createBtn.setEnabled(true);
-            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_green));
+            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_highlighted));
         }
         else
         {
             this.createBtn.setEnabled(false);
-            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_red));
+            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_unhighligted));
         }
     }
 }

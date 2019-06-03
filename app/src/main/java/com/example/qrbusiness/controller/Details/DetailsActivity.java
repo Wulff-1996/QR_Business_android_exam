@@ -54,7 +54,6 @@ public class DetailsActivity extends AppCompatActivity
                         .add(R.id.detailsContainer, fragWeb)
                         .commit();
                 break;
-
         }
     }
 }

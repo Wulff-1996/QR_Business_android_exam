@@ -250,12 +250,12 @@ public class CreateVcardFragment extends Fragment implements View.OnClickListene
         if (isValidName && isValidFirstName && isValidLastName && isValidPhoneNumber && isValidEmail)
         {
             createBtn.setEnabled(true);
-            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_green));
+            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_highlighted));
         }
-        else
+    else
         {
             this.createBtn.setEnabled(false);
-            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_red));
+            createBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.style_rounded_unhighligted));
         }
     }
 }

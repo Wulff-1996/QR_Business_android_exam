@@ -37,7 +37,7 @@ public class VcardFragment extends Fragment
         super.onCreate(savedInstanceState);
 
         Bundle b = getArguments();
-        if (b != null && b.containsKey(vcard.FIRST_NAME))
+        if (b != null && b.containsKey(QRVcard.FIRST_NAME))
         {
             vcard = new QRVcard(b);
         }

@@ -36,7 +36,6 @@ public class NavigationActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_view);
-
         init();
     }
 
@@ -63,7 +62,7 @@ public class NavigationActivity extends AppCompatActivity
         if (email != null)
         {
             View hView =  navigationView.getHeaderView(0);
-            TextView nav_user = (TextView)hView.findViewById(R.id.nav_header_username);
+            TextView nav_user = hView.findViewById(R.id.nav_header_username);
             nav_user.setText(email);
         }
 

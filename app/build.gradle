@@ -37,13 +37,9 @@ android {
 
         implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
-
-
-
-
         implementation 'com.google.firebase:firebase-core:16.0.9'
         implementation 'com.google.firebase:firebase-auth:17.0.0'
-        implementation 'com.google.firebase:firebase-firestore:19.0.0'
+        implementation 'com.google.firebase:firebase-firestore:19.0.2'
 
         implementation 'it.auron:mecard-parser:1.1.3'
         implementation 'com.github.kenglxn.QRGen:android:2.5.0'

@@ -92,7 +92,6 @@ public class LoginActivity extends AppCompatActivity
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 Toast.makeText(getApplicationContext(), task.getException().getLocalizedMessage(),
                                         Toast.LENGTH_SHORT).show();
-                                //updateUI(null);
                             }
                         }
                     });
