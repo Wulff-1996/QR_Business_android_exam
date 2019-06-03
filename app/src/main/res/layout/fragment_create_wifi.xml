@@ -8,19 +8,6 @@
     tools:context=".controller.Create.CreateWifiFragment">
 
     <ImageButton
-        android:id="@+id/fragment_create_wifi_nettype_isvalid_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@android:color/black"
-        android:tint="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="@+id/create_wifi_nettypes"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/create_wifi_nettypes"
-        app:srcCompat="@drawable/ic_incorrect" />
-
-    <ImageButton
         android:id="@+id/fragment_create_wifi_password_isvalid_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

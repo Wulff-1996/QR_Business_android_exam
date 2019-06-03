@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:umanoDragView="@+id/dragView"
+    sothree:umanoDragView="@+id/details_web_dragView"
     sothree:umanoOverlay="true"
     sothree:umanoPanelHeight="200dp"
     sothree:umanoParallaxOffset="100dp"
@@ -38,7 +38,6 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:background="@android:color/white"
             sothree:layout_constraintEnd_toEndOf="parent"
             sothree:layout_constraintTop_toTopOf="parent"
             sothree:srcCompat="@drawable/ic_delete" />
