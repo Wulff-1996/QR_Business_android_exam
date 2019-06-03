@@ -26,5 +26,5 @@ if you choose to press the image in the library, you will go to the details page
 All dependencies are declared in the build.gradle files, and simply requires you to sync the file.
 After this, the app should be runable.
 
-Enjoy using our App,
+Enjoy using our App,  
 Jakob Wulff & Mikkel S. Pieler
