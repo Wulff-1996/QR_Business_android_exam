@@ -1,4 +1,4 @@
-# QR-Business-Android
+# QR-Business-Android©
 This repository contains the source code for our exam project at KEA Computer Science, 
 and is owned alone by the contributors of the project.
 
